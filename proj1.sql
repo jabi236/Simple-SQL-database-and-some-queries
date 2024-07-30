@@ -134,19 +134,45 @@ What you should look for on them - Location, Business Name, Date, Total sale, Nu
 Add 15 receipts to your database. They should correspond to transactions between entities in your business & consumer address tables and include the information suggested above. 
 
 You can use receipts your team members have made from purchases, or any valid receipt source. If you are not comfortable with personal information (and you shouldn't be - I will explain more as the class progresses), feel free to substitute fake names to anonymize.  You may "make up" up to 5 receipts to fill in gaps in your database representing fake transactions between consumers and businesses in your database. 
-*/
- 
- CREATE DATABASE cs405team008;
- 
 
+Work items to turn in for this section: 
+*/
+ CREATE DATABASE cs405team008;
+ GO
+ USE cs405team008;
+ GO
 /*
-Work items to turn in for this section:
 20 points: Deliverable 2)  Show the commands you used to build your table(s). 
 You can copy and paste them into your submission document.
 DO NOT use screen grabs or other image clipping for these submissions, they produce hard to read documents. Hard to read documents = easy to award 0 points submissions. 
 Instead grab as text, paste as text into your document. Use a fixed space font for this like courier. I will demo this in class. 
 */
-
+ /*number?, name(surname, first name, middle intial, last name, suffix), address(street add, state, zip)*/
+ CREATE TABLE addresses(
+ cust_id INT,
+ prefix VARCHAR(16),
+ firstName VARCHAR(64),
+ middleInitial VARCHAR(2),
+ lastName VARCHAR(64),
+ suffix VARCHAR(16),
+ streetAddress VARCHAR(255),
+ city VARCHAR(64),
+ state CHAR(2),
+ zipcode INT,
+ PRIMARY KEY (cust_id)
+ );
+ GO
+ /*number, location, Businame, Date, totalSale, numItems*/
+ CREATE TABLE reciepts(
+ recip_id INT,
+ bus_name VARCHAR(255),
+ location VARCHAR(255),
+ date DATE DEFAULT GETDATE(),
+ totalSale DECIMAL(9,2),
+ totalItems INT,
+ PRIMARY KEY(recip_id)
+ );
+ GO
 /*
 20 points: Deliverable 3)  Show two of the commands you used to load data into your table(s), one of your choice, one for John Wick's address and place that in your submission. Follow the same copy paste conventions as described in Deliverable 2.
 Show two of the commands you used to load the receipt data into your table(s). 
@@ -155,10 +181,15 @@ Show two of the commands you used to load the receipt data into your table(s).
 /*
 20 points: Deliverable 4)  run show tables; from your database prompt after connecting to your database and place the output in your submission. Follow the same copy paste conventions as described in Deliverable 2.
 */
-
+show tables;
 /*
 20 points : Deliverable 5) run select * from <tablename>;  where <tablename> is the name of the table(s) you created in your database and place that output in your submission. Follow the same copy paste conventions as described in Deliverable 2.
-
+*/
+SELECT * FROM addresses;
+GO;
+SELECT * FROM reciepts;
+GO;
+/*
 The above deliverables provide me a fast reference for what you did when I review your results in the next set of deliverables.
 
 
