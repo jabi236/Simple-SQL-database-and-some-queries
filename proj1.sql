@@ -272,14 +272,16 @@ Owner wants the report to be formatted like this:  I have demoed some of this in
 
 
 We will accept the standard output from a mysql query here as shown and discussed in class - reformatting to csv or the like maybe in a later assignment. As always, I suggest a fixed spacing font for the code output in your submission document as it will produce a much tidier and professional report for considerably lower effort. 
-*/
 
-/*
 20 points: Deliverable 6)  Deliverables for this part of the assignment will be:
 -the query you wrote
 -the output it produced.
 Place these in your submission.
-
+*/
+SELECT CONCAT_WS(' ',prefix, firstName, MiddleInitial, lastName, suffix) AS 'Customer/Business Full Name', CONCAT(streetAddress, ', ', city, ', ', state, ' ', zipcode) AS 'Delivey address' FROM addresses
+ORDER BY zipcode ASC;
+GO
+/*
 ------------------------------------------------------------------------------------------------------
 
 ====================================================================
