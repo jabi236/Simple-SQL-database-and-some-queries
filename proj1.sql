@@ -18,7 +18,7 @@ https://www.kalzumeus.com/2010/06/17/falsehoods-programmers-believe-about-names/
 
 
 Create your database. Create address table(s) in your database with fields for a US street addresses for use in generating physical delivery address lists. Use this information to influence your database table design. 
-Create table(s) in your database for the receipts. Your receipt table will have a 'blob' type as one of the fields along with whatever other fields you determine are needed. 
+Create table(s) in your database for the receipts. Your receipt table will have a 'blob 'type as one of the fields along with whatever other fields you determine are needed. 
 
 I leave the design choices completely up to your team. We have had a few discussions in class about the interesting (as in a curse) nature of addresses in the US. It will prove a useful tool for learning databases here. 
 
@@ -165,10 +165,14 @@ Instead grab as text, paste as text into your document. Use a fixed space font f
  /*number, location, Businame, Date, totalSale, numItems*/
  CREATE TABLE reciepts(
  recip_id INT,
+ cust_name VARCHAR(255),
  bus_name VARCHAR(255),
- location VARCHAR(255),
- date DATE DEFAULT GETDATE(),
- totalSale DECIMAL(9,2),
+ streetAddress VARCHAR(255),
+ city VARCHAR(64),
+ state CHAR(2),
+ zipcode INT,
+ saleDate DATE DEFAULT GETDATE(),
+ saleTotal DECIMAL(9,2),
  totalItems INT,
  PRIMARY KEY(recip_id)
  );
@@ -177,18 +181,82 @@ Instead grab as text, paste as text into your document. Use a fixed space font f
 20 points: Deliverable 3)  Show two of the commands you used to load data into your table(s), one of your choice, one for John Wick's address and place that in your submission. Follow the same copy paste conventions as described in Deliverable 2.
 Show two of the commands you used to load the receipt data into your table(s). 
 */
+INSERT INTO addresses (cust_id, prefix, firstName, middleInitial, lastName, suffix, streetAddress, city, state, zipcode)
+VALUES
+(1, 'Mr.', 'Ray', 'L.', 'Hyatt', 'Jr.', '300 Rose Street Room 102 Hardymon Building', 'Lexington', 'KY', 40506),
+(2, 'Mr.', 'Ray', 'L.', 'Hyatt', 'Jr.', '301 Hilltop Avenue, Room 102', 'Lexington', 'KY', 40506),
+(3, NULL, 'John', NULL, 'Wick', NULL, '82 Beaver St Room 1301', 'New York', 'NY', 10005),
+(4, NULL, 'Tony', NULL, 'Stark', NULL, '200 Park Avenue Penthouse', 'New York', 'NY', 10001),
+(5, 'Dr.', 'Stephen', NULL, 'Strange', NULL, '117A Bleecker Street', 'New York', 'NY', 10001),
+(6, NULL, 'Bob', 'C.', 'Smith', NULL, '200 Park Avenue Apartment 221', 'New York', 'NY', 10001),
+(7, NULL, 'Bowman', 'F.', 'Wildcat', NULL, '#1 Avenue of Champions', 'Lexington', 'KY', 40506),
+(8, NULL, 'Bob', 'C.', 'Smith', NULL, '200 Park Avenue', 'Lexington', 'KY', 40507),
+(9, NULL, 'Bob', NULL, 'Porter', 'c/o Intech', '1 Dead End Row Room 200', 'Dallas', 'TX', 12347),
+(10, 'Mr.', 'Bob', NULL, 'Sydell', 'c/o Intech', '1 Dead End Row Room 200', 'Dallas', 'TX', 12347),
+(11, NULL, 'Brian', 'A', 'Scott', NULL, '175 Malabu Dr', 'Lexington', 'KY',40503),
+(12, NULL, 'Billy', 'R', 'Healan', NULL, '3549 Indian Summer Trl', 'Lexington', 'KY', 40509),
+(13, 'Mrs.', 'Jill', 'C', 'Johnson', NULL, '183 Eastover Dr', 'Lexington', 'KY', 40502),
+(14, NULL, 'Bobby', 'J', 'Duncan', NULL, '1119 Tatesbrook Dr', 'Lexington', 'KY', 40517),
+(15, NULL, 'Ronald', 'A', 'Smith', NULL, '170 NW 24th Ct', 'Pompano Beach', 'FL', 33064),
+(16, NULL, 'John', NULL, 'Calipari', NULL, '1732 Richmond Rd', 'Lexington', 'KY', 40502),
+(17, NULL, 'Kristina', NULL, 'Love', NULL, '306 Green St', 'Brandenburg', 'KY', 40108),
+(18, 'Mr.', 'Philip', 'A', 'Spencer', NULL, '347 Retrac Rd', 'Lexington', 'KY', 40503),
+(19, NULL, 'Jacob', 'M', 'Long', NULL, '684 Halifax Dr', 'Lexington', 'KY', 40503),
+(20, NULL, NULL, NULL, 'Kroger', NULL, '705 Euclid Ave', 'Lexington', 'KY', 40502),
+(21, NULL, NULL, NULL, 'Speedway', NULL, '819 South Limestone', 'Lexington', 'KY', 40508),
+(22, NULL, NULL, NULL, 'Wendys', NULL, '2575 Nicholasville Rd', 'Lexington', 'KY', 40503),
+(23, NULL, NULL, NULL, 'Hibachi Express', NULL, '565 South Limestone', 'Lexington', 'KY', 40508),
+(24, NULL, NULL, NULL, 'Gulf', NULL, '405 Waller Ave', 'Lexington', 'KY', 40504),
+(25, NULL, NULL, NULL, 'Shell', NULL, '905 South Limestone', 'Lexington', 'KY', 40503),
+(26, NULL, NULL, NULL, 'Skyline', NULL, '2850 Richmond Rd', 'Lexington', 'KY', 40509),
+(27, NULL, NULL, NULL, 'Dicks Sporting Goods', NULL, '3645 Nicholasville Rd', 'Lexington', 'KY', 40503),
+(28, NULL, 'Harold', 'L', 'Jones', NULL, '3310 Tates Creek Apt 417', 'Lexington', 'KY', 40502),
+(29, NULL, NULL, NULL, 'Chick-Fil-A', NULL, '2299 Richmond Rd', 'Lexington', 'KY', 40502),
+(30, NULL, NULL, NULL, 'Thortons', NULL, '802 North Broadway', 'Lexington', 'KY', 40508),
+(31, NULL, NULL, NULL, 'Target', NULL, '131 W Reynolds Rd', 'Lexington', 'KY', 40503),
+(32, NULL, NULL, NULL, 'Papa Johns', NULL, '265A Avenue of Champions', 'Lexington', 'KY', 40508),
+(33, NULL, 'James', NULL, 'Taylor', NULL, '481 Shropshire Ave', 'Lexington', 'KY', 40508),
+(34, NULL, 'Brandon', 'J', 'McDonald', NULL, '1228 Devonport Dr', 'Lexington', 'KY', 40504),
+(35, NULL, 'Joseph', 'W', 'Savage', NULL, '10350 Giverny Blvd', 'Cincinatti', 'OH', 45241),
+(36, NULL, 'Trey', NULL, 'Wright', NULL, '2216 W Ormsby Ave', 'Louisville', 'KY', 40210),
+(37, NULL, 'Grant', 'L', 'Gray', NULL, '1619 Bypass Rd #237', 'Winchester', 'KY', 40391),
+(38, NULL, 'Chris', 'W', 'White', NULL, '2316 Old Hickory Ln', 'Lexington', 'KY', 40515),
+(39, NULL, 'Nicolas', 'A', 'Leet', NULL, '5529 Noland Rd', 'Shawnee', 'KS', 66216),
+(40, NULL, 'Chris', 'M', 'Smith', NULL, '626 Portland Dr.', 'Lexington', 'KY', 40503);
+GO
+INSERT INTO reciepts (recip_id, cust_name, bus_name, streetAddress, city, state, zipcode, saleDate, saleTotal, totalItems)
+VALUES
+(1, 'Jacob Long', 'Kroger', '705 Euclid Ave', 'Lexington', 'KY', 40502, '2023-02-18', 59.06, 12),
+(2, 'Chris Smith', 'Speedway', '819 South Limestone', 'Lexington', 'KY', 40508, '2023-02-13', 12.71, 1),
+(3, 'Nicolas Leet', 'Wendys', '2575 Nicholasville Rd', 'Lexington', 'KY', 40503, '20230213', 6.2, 1),
+(4, 'Chris White', 'Hibachi Express', '565 South Limestone', 'Lexington', 'KY', 40508, '2023-02-03', 8.43, 1),
+(5, 'Grant Gray', 'Gulf', '405 Waller Ave', 'Lexington', 'KY', 40504, '2023-02-13', 4.78, 1),
+(6, 'Trey Wright', 'Shell', '905 South Limestone', 'Lexington', 'KY', 40503, '2023-01-03', 25.41, 4),
+(7, 'Joseph Savage', 'Skyline', '2850 Richmond Rd', 'Lexington', 'KY', 40509, '2022-12-18', 10.08, 1),
+(8, 'Brandon McDonald', 'Dicks Sporting Goods', '3645 Nicholasville Rd', 'Lexington', 'KY', 40503, '2023-02-18', 192.63, 3),
+(9, 'James Taylor', 'Kroger', '705 Euclid Ave', 'Lexington', 'KY', 40502, '2023-02-18', 33.53, 7),
+(10, 'Harold Jones', 'Kroger', '705 Euclid Ave', 'Lexington', 'KY', 40502, '2023-02-15', 99.29, 22),
+(11, 'Philip Spencer', 'Chick-fil-a', '2299 Richmond Rd', 'Lexington', 'KY', 40502, '2023-02-15', 10.79, 2),
+(12, 'Kristina Love', 'Chick-fil-a', '2299 Richmond Rd', 'Lexington', 'KY', 40502, '2023-02-20', 9.85, 3),
+(13, 'John Calipari', 'Thortons', '802 North Broadway', 'Lexington', 'KY', 40508, '2022-11-03', 2.73, 1),
+(14, 'Ronald Smith', 'Target', '131 W Reynolds Rd', 'Lexington', 'KY', 40503, '2023-02-03', 31.16, 4),
+(15, 'Bob Duncan', 'Papa Johns', '265A Avenue of Champions', 'Lexington', 'KY', 40508, '2023-02-15', 14.09, 2);
+GO
 
 /*
 20 points: Deliverable 4)  run show tables; from your database prompt after connecting to your database and place the output in your submission. Follow the same copy paste conventions as described in Deliverable 2.
 */
-show tables;
+SELECT TABLE_NAME 
+FROM [cs405team008].INFORMATION_SCHEMA.TABLES 
+WHERE TABLE_TYPE = 'BASE TABLE'
+GO
 /*
 20 points : Deliverable 5) run select * from <tablename>;  where <tablename> is the name of the table(s) you created in your database and place that output in your submission. Follow the same copy paste conventions as described in Deliverable 2.
 */
 SELECT * FROM addresses;
-GO;
+GO
 SELECT * FROM reciepts;
-GO;
+GO
 /*
 The above deliverables provide me a fast reference for what you did when I review your results in the next set of deliverables.
 
