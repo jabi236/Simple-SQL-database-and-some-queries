@@ -153,7 +153,7 @@ Instead grab as text, paste as text into your document. Use a fixed space font f
  prefix VARCHAR(16),
  firstName VARCHAR(64),
  middleInitial VARCHAR(2),
- lastName VARCHAR(64),
+ lastName VARCHAR(64) NOT NULL,
  suffix VARCHAR(16),
  streetAddress VARCHAR(255),
  city VARCHAR(64),
@@ -177,6 +177,7 @@ Instead grab as text, paste as text into your document. Use a fixed space font f
  PRIMARY KEY(recip_id)
  );
  GO
+
 /*
 20 points: Deliverable 3)  Show two of the commands you used to load data into your table(s), one of your choice, one for John Wick's address and place that in your submission. Follow the same copy paste conventions as described in Deliverable 2.
 Show two of the commands you used to load the receipt data into your table(s). 
@@ -290,9 +291,7 @@ STOP - READ THIS CAREFULLY BEFORE CONTINUING
 Stop here until you have completed items 1-6 if you wish to do this in a manner that mimics some real world business behavior. If you do not wish to do this continue reading to the end prior to starting. Either way you will learn things. I suggest you debate with your team and arrive at mutually agreeable path prior to proceeding past this point. Regardless of your team's choice, remember to document it in Deliverable 1).
 
 ====================================================================
-*/
 
- /*
 -----------------------------------------------------------------------------------------------------
 Business change request #1
 
@@ -332,7 +331,67 @@ Place these in your submission following the previous formatting guidelines.
 
 --------------------------------------------------------------------------------------------------------------------------------------
 */
+/*Business Query 1*/
+ALTER TABLE addresses
+ADD phone BIGINT;
+GO
 
+UPDATE addresses SET phone = 5555555555 WHERE cust_id = 3;
+UPDATE addresses SET phone = 5555553142 WHERE cust_id = 4;
+UPDATE addresses SET phone = 5555554321 WHERE cust_id = 5;
+UPDATE addresses SET phone = 8594699137 WHERE cust_id = 11;
+UPDATE addresses SET phone = 8594200806 WHERE cust_id = 12;
+UPDATE addresses SET phone = 8593687710 WHERE cust_id = 13;
+UPDATE addresses SET phone = 8592298625 WHERE cust_id = 14;
+UPDATE addresses SET phone = 8475090346 WHERE cust_id = 15;
+UPDATE addresses SET phone = 9016742225 WHERE cust_id = 16;
+UPDATE addresses SET phone = 2704222636 WHERE cust_id = 17;
+UPDATE addresses SET phone = 2607047842 WHERE cust_id = 18;
+UPDATE addresses SET phone = 8592781433 WHERE cust_id = 19;
+UPDATE addresses SET phone = 8596873270 WHERE cust_id = 20;
+UPDATE addresses SET phone = 8592526994 WHERE cust_id = 21;
+UPDATE addresses SET phone = 8592774311 WHERE cust_id = 22;
+UPDATE addresses SET phone = 8592802255 WHERE cust_id = 23;
+UPDATE addresses SET phone = 8592250002 WHERE cust_id = 24;
+UPDATE addresses SET phone = 8592549453 WHERE cust_id = 25;
+UPDATE addresses SET phone = 8593093929 WHERE cust_id = 26;
+UPDATE addresses SET phone = 8592731642 WHERE cust_id = 27;
+UPDATE addresses SET phone = 8592668647 WHERE cust_id = 28;
+UPDATE addresses SET phone = 8593559856 WHERE cust_id = 29;
+UPDATE addresses SET phone = 8592551341 WHERE cust_id = 30;
+UPDATE addresses SET phone = 8592739403 WHERE cust_id = 31;
+UPDATE addresses SET phone = 8592330808 WHERE cust_id = 32;
+UPDATE addresses SET phone = 8595233066 WHERE cust_id = 33;
+UPDATE addresses SET phone = 8592249653 WHERE cust_id = 34;
+UPDATE addresses SET phone = 8598855591 WHERE cust_id = 35;
+UPDATE addresses SET phone = 5024662851 WHERE cust_id = 36;
+UPDATE addresses SET phone = 8597492158 WHERE cust_id = 37;
+UPDATE addresses SET phone = 8592238617 WHERE cust_id = 38;
+UPDATE addresses SET phone = 7858383079 WHERE cust_id = 39;
+UPDATE addresses SET phone = 8595597062 WHERE cust_id = 40;
+GO
+
+SELECT CONCAT_WS(' ',prefix, firstName, MiddleInitial, lastName, suffix) AS 'Customer/Business Full Name', phone AS 'Phone number'
+FROM addresses;
+GO
+
+/*Business Query 2*/
+SELECT TOP 2 zipcode,
+COUNT(zipcode) AS 'z_count'
+INTO zipcode_counts
+FROM addresses
+GROUP BY zipcode
+ORDER BY COUNT(zipcode) DESC;
+GO
+
+SELECT * FROM zipcode_counts
+ORDER BY z_count DESC;
+GO
+
+SELECT CONCAT_WS(' ',a.prefix, a.firstName, a.MiddleInitial, a.lastName, a.suffix) AS 'Customer/Business Full Name', a.phone AS 'Phone number', a.zipcode AS 'Zipcode' 
+FROM addresses a
+INNER JOIN  zipcode_counts z ON z.zipcode = a.zipcode 
+GO
 /*
 Business Change #3 
 
