@@ -489,10 +489,11 @@ Where database name is your linkblue name. Same name as in the use databasename;
 
 (Do not panic, we will go over this in class).
 It would be a GREAT idea for each team-member to get a copy of this backup and store it in their own multi-lab account.
-Note: Ironically direct restores are disabled for this learning database for reasons, I will show you an alternative method for recovering your data that when it becomes relevant.  
+Note: Ironically direct restores are disabled for this learning database for reasons, I will show you an alternative method for recovering your data that when it becomes relevant.
 
-
-
+BACKUP DATABASE cs405team008
+TO DISK = 'C:\Users\Owner\Downloads\cs405.team008.sql';
+GO
 */
 /*
 10 points: Deliverable 12) - Write a short blurb about how your path in completing this project as influenced by the information you had at hand. No more that one typed page, I am not looking for a paper here, just experiences and lessons learned. 
