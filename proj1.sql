@@ -457,6 +457,11 @@ Your boss also wants to know how many customers have the substring "Bo" in their
 Place these in your submission.
 */
 
+SELECT COUNT(firstName) AS 'Total number'
+FROM addresses
+WHERE firstName LIKE 'Bo%';
+GO
+
 /*
 10 points Deliverable 10) --- your instructor will release this to you in 1 week. Businesses have to deal with unexpected changes all the time. This will help simulate it. 
 
