@@ -163,7 +163,7 @@ Instead grab as text, paste as text into your document. Use a fixed space font f
  );
  GO
  /*number, location, Businame, Date, totalSale, numItems*/
- CREATE TABLE reciepts(
+ CREATE TABLE receipts(
  recip_id INT,
  cust_name VARCHAR(255),
  bus_name VARCHAR(255),
@@ -225,7 +225,7 @@ VALUES
 (39, NULL, 'Nicolas', 'A', 'Leet', NULL, '5529 Noland Rd', 'Shawnee', 'KS', 66216),
 (40, NULL, 'Chris', 'M', 'Smith', NULL, '626 Portland Dr.', 'Lexington', 'KY', 40503);
 GO
-INSERT INTO reciepts (recip_id, cust_name, bus_name, streetAddress, city, state, zipcode, saleDate, saleTotal, totalItems)
+INSERT INTO receipts (recip_id, cust_name, bus_name, streetAddress, city, state, zipcode, saleDate, saleTotal, totalItems)
 VALUES
 (1, 'Jacob Long', 'Kroger', '705 Euclid Ave', 'Lexington', 'KY', 40502, '2023-02-18', 59.06, 12),
 (2, 'Chris Smith', 'Speedway', '819 South Limestone', 'Lexington', 'KY', 40508, '2023-02-13', 12.71, 1),
@@ -256,7 +256,7 @@ GO
 */
 SELECT * FROM addresses;
 GO
-SELECT * FROM reciepts;
+SELECT * FROM receipts;
 GO
 /*
 The above deliverables provide me a fast reference for what you did when I review your results in the next set of deliverables.
@@ -390,7 +390,7 @@ GO
 
 SELECT CONCAT_WS(' ',a.prefix, a.firstName, a.MiddleInitial, a.lastName, a.suffix) AS 'Customer/Business Full Name', a.phone AS 'Phone number', a.zipcode AS 'Zipcode' 
 FROM addresses a
-INNER JOIN  zipcode_counts z ON z.zipcode = a.zipcode 
+INNER JOIN  zipcode_counts z ON z.zipcode = a.zipcode; 
 GO
 /*
 Business Change #3 
@@ -411,6 +411,37 @@ Search all receipts and provide a report of the following
 -the output it produced.
 Place these in your submission.
 */
+/*Business Change 3*/
+ALTER TABLE receipts
+ADD highest DECIMAL(9,2);
+GO
+
+ALTER TABLE receipts
+ADD lowest DECIMAL(9,2);
+GO
+
+ALTER TABLE receipts
+ADD CONSTRAINT CHK_High CHECK(highest <= saleTotal AND highest <= saleTotal);
+GO
+
+ALTER TABLE receipts
+ADD CONSTRAINT CHK_Low CHECK(lowest <= highest AND lowest <= saleTotal);
+GO
+
+UPDATE receipts SET highest = saleTotal, lowest = saleTotal WHERE totalItems = 1;
+UPDATE receipts SET highest = 12.99, lowest = 1.99 WHERE recip_id = 1;
+UPDATE receipts SET highest = 6.99, lowest = 2.99 WHERE recip_id = 6;
+UPDATE receipts SET highest = 149.99, lowest = 5.99 WHERE recip_id = 8;
+UPDATE receipts SET highest = 15.99, lowest = 4.99 WHERE recip_id = 9;
+UPDATE receipts SET highest = 10.99, lowest = 0.99 WHERE recip_id = 10;
+UPDATE receipts SET highest = 5.79, lowest = 5.00 WHERE recip_id = 11;
+UPDATE receipts SET highest = 5.79, lowest = 0.30 WHERE recip_id = 12;
+UPDATE receipts SET highest = 10.99, lowest = 2.99 WHERE recip_id = 14;
+UPDATE receipts SET highest = 14.09, lowest = 0.0 WHERE recip_id = 15;
+GO
+
+SELECT * FROM receipts;
+GO
 
 /*
 Business Query #4:
