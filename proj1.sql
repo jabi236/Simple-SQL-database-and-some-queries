@@ -471,8 +471,14 @@ Write a query that returns the total sales by Customer Zip code sorted in descen
 Should be in this format:
 
 | Consumer Zip Code | Total Sales |
+*/
+SELECT zipcode AS 'Consumer Zip code', SUM(saleTotal) AS 'Total Sales'
+FROM receipts
+GROUP BY zipcode
+ORDER BY SUM(saleTotal) DESC;
+GO
 
-
+/*
 10 points: Deliverable 11) Backup up your database to the name "cs405.teamname.sql" and store in your home directory on the multi-lab systems.
 -Show the commands you used to do this and place these in your submission.
 
